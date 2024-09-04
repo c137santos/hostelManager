@@ -1,0 +1,111 @@
+body {
+    background-color: #d4edda; /* Verde clarinho */
+    font-family: 'Arial', sans-serif;
+    color: #2f4f4f; /* Dark Slate Gray */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+}
+
+
+h1 {
+    font-family: 'Georgia', serif;
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+form label, form input, form button {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.horizontal-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+}
+
+.form-container {
+    background-color: #5bbbc4;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    margin-top: 20px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block; 
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    background-color: #f5deb3; /* Bege */
+    border: none;
+    padding: 15px 30px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #e0cda9; /* Bege mais escuro */
+}
+
+.button:disabled {
+    background-color: #ffa50082;
+    color: white;
+    cursor: not-allowed;
+}
+
+.btn {
+    background-color: #FFA500; /* Laranja */
+    color: black;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 80%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adiciona sombra */
+}
+
+.btn:disabled {
+    background-color: #ffa50082;
+    color: white;
+    cursor: not-allowed;
+}
+
+.room-btn {
+    margin: 5px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #dbc396; /* Bege */
+    color: white; /* Fonte branca quando deselecionado */
+}
+
+.room-btn.selected {
+    background-color: #FFA500; /* Laranja quando selecionado */
+    border-color: #ff8c00; /* Laranja */
+    color: black; /* Fonte preta quando selecionado */
+}
