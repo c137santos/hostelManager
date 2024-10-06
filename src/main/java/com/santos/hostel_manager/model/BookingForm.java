@@ -10,12 +10,12 @@ public class BookingForm {
         this.name = name;
         this.age = age;
         this.roomId = roomId;
+        this.bookingId = bookingId;
     }
 
     public String getName() {
         return name;
     }
-
 
     public int getAge() {
         return age;
@@ -24,5 +24,9 @@ public class BookingForm {
 
     public String getRoomId() {
         return roomId;
+    }
+
+    public String getbookingId() {
+        return bookingId;
     }
 }

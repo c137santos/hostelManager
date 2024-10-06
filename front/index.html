@@ -5,15 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="style/styles.css">
+    <script src="https://unpkg.com/htmx.org@1.6.1"></script>
     <title>Manga Rosa Hostel</title>
 </head>
 <body>
     <h1>Manga Rosa Hostel</h1>
 
-    <div class="horizontal-container" id="rooms-container" style="display: flex; align-items: baseline;">
+    <div class="horizontal-container" hx-trigger="load" id="rooms-container" style="display: flex; align-items: baseline;">
     </div>
 
-    <form id="form-container" class="form-container">
+    <form id="form-container" hx-post="http://127.0.0.1:8080/reserva"
+     hx-target="#showBookingCode" 
+     hx-vals="js:{'bookingId' : getBookingCode()}"
+     class="form-container" >
         <div class="form-group">
             <label for="name">Nome: </label>
             <input type="text" id="name" name="name" required>
@@ -25,24 +29,38 @@
         </div>
 
         <input type="hidden" id="roomId" name="roomId" required>
-        <div>
-            Código da Reserva:
-            <p hx-target="#bookingcode"></p>
-         </div>
+        <input type="hidden" id="bookingcode" value="">
+
         <div style="display: flex;align-items: baseline;justify-content: space-between;">
             <button type="submit" id="reserve" class="btn">Reservar</button>
-            <button type="button" id="edit" class="btn" disabled>Editar</button>
+            <button type="submit" id="edit" class="btn">Corrigir!</button>
+        </div>
+        <div>
+            <p id="showBookingCode"></p>
         </div>
     </form>
+    <div class="specific-div">
+        <button type="submit"
+        hx-get="http://127.0.0.1:8080/reserva/listar"
+        id="reserve"
+        hx-target="#reservations-table"
+        hx-swap="innerHTML"
+        class="btn specific-btn ">Listar reservas</button>
+    </div>
+
+    <div id="reservations-table"></div>   
 
     <script>
+        function getBookingCode() {
+                const bookingCodeElement = document.getElementById('showBookingCode');
+                return bookingCodeElement.innerText.trim();
+            }
         document.addEventListener('DOMContentLoaded', function() {
             fetch('http://127.0.0.1:8080/')
                 .then(response => response.json())
                 .then(rooms => {
                     const roomsContainer = document.getElementById('rooms-container');
                     const roomIdInput = document.getElementById('roomId');
-
                     rooms.forEach(room => {
                         const roomButton = document.createElement('button');
                         roomButton.textContent = room.name;
@@ -59,55 +77,37 @@
                     });
                 })
                 .catch(error => console.error('Erro ao carregar os quartos:', error));
+            })
 
-            const form = document.getElementById('form-container');
-            const editButton = document.getElementById('edit');
-            const reserveButton = document.getElementById('reserve');
-            form.addEventListener('submit', function(event) {
-                event.preventDefault();
-
-                Swal.fire({
-                    title: 'Confirm',
-                    text: 'Confirma sua reserva?',
-                    showCancelButton: true,
-                    confirmButtonText: 'Sim',
-                    cancelButtonText: 'Não'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        const formData = new FormData(form);
-                        const data = Object.fromEntries(formData.entries());
-                        fetch('http://127.0.0.1:8080/reservar', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(data)
-                        })
-                        .then(response => response.json())
-                        .then(result => {
-                            Swal.fire('Reservado', 'Sua reserva foi confirmada', 'success');
-                            const inputs = form.querySelectorAll('input, button');
-                            inputs.forEach(input => input.disabled = true);
-                            reserveButton.disabled = true;
-                            editButton.disabled = false;
-                        })
-                        .catch(error => {
-                            Swal.fire('Erro', 'Ocorreu um erro ao fazer a reserva')
-                            console.error(error)
-                        })
-                    } else if (result.dismiss === Swal.DismissReason.cancel) {
-                        Swal.fire('Cancelado', 'Sua reserva não foi confirmada', 'error');
-                    }
-                });
+            document.body.addEventListener('htmx:afterOnLoad', function(evt) {
+                if (evt.detail.target.id === 'reservations-table') {
+                    const data = JSON.parse(evt.detail.xhr.responseText);
+                    const table = document.createElement('table');
+                    table.innerHTML = `
+                        <thead>
+                            <tr>
+                                <th>Hospede</th>
+                                <th>Código Reserva</th>
+                                <th>Idade</th>
+                                <th>Quarto</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${data.map(booking => `
+                                <tr>
+                                    <td >${booking.name}</td>
+                                    <td>${booking.bookingCode}</td>
+                                    <td>${booking.age}</td>
+                                    <td>${booking.roomName}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    `;
+                    evt.detail.target.innerHTML = '';
+                    evt.detail.target.appendChild(table);
+                }
             });
 
-            editButton.addEventListener('click', function() {
-                const inputs = form.querySelectorAll('input, button');
-                inputs.forEach(input => input.disabled = false);
-                editButton.disabled = true; // Desabilitar o botão Editar novamente
-                reserveButton.disabled = false; // Habilitar o botão Reservar novamente
-            });
-        });
     </script>
 </body>
 </html>

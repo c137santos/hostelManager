@@ -109,3 +109,53 @@ button:hover {
     border-color: #ff8c00; /* Laranja */
     color: black; /* Fonte preta quando selecionado */
 }
+
+tr.htmx-swapping td {
+    opacity: 0;
+    transition: opacity 1s ease-out;
+  }
+
+.specific-div {
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.specific-btn {
+    color: black;
+    cursor: pointer;
+    border-radius: 4px;
+    width: 200px; 
+}
+
+
+.reservations-table {
+    width: 50%;
+    margin: 0 auto;
+    border-collapse: collapse; 
+}
+
+th, td {
+    text-align: left; 
+    padding: 8px; 
+    border: 1px solid #ddd; 
+}
+
+thead {
+    background-color: #f2f2f2; 
+}
+
+tbody tr {
+    background-color: #ffffff;
+}
+
+tbody tr:hover {
+    background-color: #f1f1f1; 
+}
