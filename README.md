@@ -2,8 +2,12 @@
 
 Professor Bertoti
 
-## Atividade I
+## Atividade I 
 
+Está na pasta atividadeI com as chamadas da API
+Além disso, foi desenhado lá o hostelManagerSystemApplication.java que foi solicitado como CRUD.
+
+## Atividade II
 
 Disciplina de Laboratório de Banco de Dados III, ministrada pelo professor Bertoti. 
 

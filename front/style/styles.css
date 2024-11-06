@@ -56,6 +56,15 @@ form label, form input, form button {
     border-radius: 4px;
 }
 
+.bnt-input {
+    margin-top: 5px;
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
 button {
     background-color: #f5deb3; /* Bege */
     border: none;

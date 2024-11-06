@@ -59,10 +59,11 @@ public class HostelManagerSystemApplication {
 		return rm.addRoom(room.getName());
 	}
 
-	@DeleteMapping("/delete/{room_id}")
-	public String deleteRoom (@PathVariable String room_id) {
-		return rm.deleteRoom(room_id);
-	}
+    @PostMapping("/delete")
+    public ResponseEntity<String> deleteRoom(@RequestBody String room_id) {
+        rm.deleteRoom(room_id);
+        return ResponseEntity.ok("Room deleted successfully");
+    }
 
 	@PostMapping(value = "/reserva", consumes = "application/x-www-form-urlencoded")
 	public @ResponseBody ResponseEntity<?> realizarReserva(@RequestParam Map<String, String> bookingf){
@@ -95,11 +96,16 @@ public class HostelManagerSystemApplication {
 	}
 
 	@DeleteMapping("reserva/excluir")
-	@CrossOrigin
 	public List<Map<String, Object> > excluirReserva (){
 		return bm.getAllBookings();
 	}
 
+    @PostMapping("reserva/delete")
+    public ResponseEntity<String> deleteReserva(@RequestParam Map<String, String> bookingid) {
+		String reservationId = bookingid.get("id");
+        bm.excluirReserva(reservationId);
+        return ResponseEntity.ok("Room deleted successfully");
+    }
 
 	public static void main(String[] args) {
 		SpringApplication.run(HostelManagerSystemApplication.class, args);

@@ -50,6 +50,18 @@
 
     <div id="reservations-table"></div>   
 
+    <form class="specific-div" 
+        hx-post="http://127.0.0.1:8080/reserva/delete"
+        hx-include="#reserva-id-delete"
+        hx-trigger="submit">
+        <input type="text" id="reserva-id-delete" name="id" placeholder="Insira o ID da reserva" class="btn-input">
+
+    <button type="submit" class="btn specific-btn">
+        Deletar reserva
+    </button>
+    </form>
+
+
     <script>
         function getBookingCode() {
                 const bookingCodeElement = document.getElementById('showBookingCode');
